@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE module SYSTEM "module.dtd" >
+<module>
+    <name>magnolia-handlebars-renderer</name>
+    <displayName>Handlebars-Renderer</displayName>
+    <description>Magnolia handlebars renderer using jknack lib</description>
+    <versionHandler>com.merkle.oss.magnolia.renderer.handlebars.configuration.HandlebarsRendererModuleVersionHandler</versionHandler>
+    <version>${project.version}</version>
+
+    <components>
+        <id>main</id>
+        <configurer>
+            <class>com.merkle.oss.magnolia.renderer.handlebars.configuration.HandlebarsRendererGuiceComponentConfigurer</class>
+        </configurer>
+        <component>
+            <type>com.merkle.oss.magnolia.renderer.handlebars.renderer.HandlebarsRenderer</type>
+            <implementation>com.merkle.oss.magnolia.renderer.handlebars.renderer.HandlebarsRenderer</implementation>
+        </component>
+        <component>
+            <type>com.merkle.oss.magnolia.renderer.handlebars.configuration.InstallHandlebarsRendererSetupTask</type>
+            <implementation>com.merkle.oss.magnolia.renderer.handlebars.configuration.InstallHandlebarsRendererSetupTask</implementation>
+        </component>
+        <component>
+            <type>com.merkle.oss.magnolia.renderer.handlebars.renderer.HandlebarsRenderer$ValueResolversProvider</type>
+            <implementation>com.merkle.oss.magnolia.renderer.handlebars.renderer.DefaultValueResolversProvider</implementation>
+        </component>
+        <component>
+            <type>com.merkle.oss.magnolia.renderer.handlebars.helpers.magnolia.CmsAreaTemplateHelper$AvailableComponentsResolver</type>
+            <implementation>com.merkle.oss.magnolia.renderer.handlebars.helpers.magnolia.DefaultAvailableComponentsResolver</implementation>
+        </component>
+        <component>
+            <type>com.merkle.oss.magnolia.renderer.handlebars.helpers.magnolia.CmsAreaTemplateHelper$AreaCreationListener</type>
+            <implementation>com.merkle.oss.magnolia.renderer.handlebars.helpers.magnolia.DefaultAreaCreationListener</implementation>
+        </component>
+        <!-- magnolia helpers -->
+        <component>
+            <type>com.merkle.oss.magnolia.renderer.handlebars.helpers.magnolia.CmsComponentTemplateHelper$Appender</type>
+            <implementation>com.merkle.oss.magnolia.renderer.handlebars.helpers.magnolia.DefaultCmsComponentAppenderPrepender</implementation>
+        </component>
+        <component>
+            <type>com.merkle.oss.magnolia.renderer.handlebars.helpers.magnolia.CmsComponentTemplateHelper$Prepender</type>
+            <implementation>com.merkle.oss.magnolia.renderer.handlebars.helpers.magnolia.DefaultCmsComponentAppenderPrepender</implementation>
+        </component>
+
+        <component>
+            <type>com.merkle.oss.magnolia.renderer.handlebars.helpers.magnolia.CmsAreaTemplateHelper</type>
+            <implementation>com.merkle.oss.magnolia.renderer.handlebars.helpers.magnolia.CmsAreaTemplateHelper</implementation>
+        </component>
+        <component>
+            <type>com.merkle.oss.magnolia.renderer.handlebars.helpers.magnolia.CmsComponentTemplateHelper</type>
+            <implementation>com.merkle.oss.magnolia.renderer.handlebars.helpers.magnolia.CmsComponentTemplateHelper</implementation>
+        </component>
+        <component>
+            <type>com.merkle.oss.magnolia.renderer.handlebars.helpers.magnolia.CmsPageTemplateHelper</type>
+            <implementation>com.merkle.oss.magnolia.renderer.handlebars.helpers.magnolia.CmsPageTemplateHelper</implementation>
+        </component>
+    </components>
+
+    <dependencies>
+        <dependency>
+            <name>core</name>
+        </dependency>
+        <dependency>
+            <name>rendering</name>
+        </dependency>
+    </dependencies>
+</module>

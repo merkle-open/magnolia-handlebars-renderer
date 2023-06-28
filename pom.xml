@@ -4,9 +4,9 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.namics.oss.magnolia</groupId>
-	<artifactId>magnolia-handlebars-renderer</artifactId>
+	<artifactId>magnolia-handlebars-renderer-parent</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
+	<packaging>pom</packaging>
 
 	<name>${project.artifactId}</name>
 	<description>Magnolia handlebars renderer using jknack lib</description>
@@ -28,7 +28,19 @@
 		</developer>
 	</developers>
 
-	<properties>
+    <modules>
+        <module>light-development</module>
+		<module>blossom</module>
+	</modules>
+
+    <properties>
+		<magnolia.version>6.2.35</magnolia.version>
+		<javax.servlet-api.version>4.0.1</javax.servlet-api.version>
+		<handlebars.version>4.3.1</handlebars.version>
+		<google-autofactory-version>1.0.1</google-autofactory-version>
+		<magnolia.blossom.version>3.6.2</magnolia.blossom.version>
+		<spring.version>5.3.27</spring.version>
+
 		<!--Test dependency versions-->
 		<junit.version>5.7.1</junit.version>
 		<mockito.version>3.7.7</mockito.version>
@@ -42,24 +54,64 @@
 
 		<javaVersion>11</javaVersion>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.deploy.skip>true</maven.deploy.skip>
 	</properties>
 
-	<dependencies>
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>com.namics.oss.magnolia</groupId>
+				<artifactId>magnolia-handlebars-renderer-blossom</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.namics.oss.magnolia</groupId>
+				<artifactId>magnolia-handlebars-renderer</artifactId>
+				<version>${project.version}</version>
+			</dependency>
 
-		<!-- TESTING DEPENDENCIES -->
-		<dependency>
-			<groupId>org.junit.jupiter</groupId>
-			<artifactId>junit-jupiter</artifactId>
-			<version>${junit.version}</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.mockito</groupId>
-			<artifactId>mockito-core</artifactId>
-			<version>${mockito.version}</version>
-			<scope>test</scope>
-		</dependency>
-	</dependencies>
+			<!-- Importing depMgt -->
+			<dependency>
+				<groupId>info.magnolia.bundle</groupId>
+				<artifactId>magnolia-bundle-parent</artifactId>
+				<version>${magnolia.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>info.magnolia.blossom</groupId>
+				<artifactId>magnolia-module-blossom</artifactId>
+				<version>${magnolia.blossom.version}</version>
+				<scope>provided</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>com.github.jknack</groupId>
+				<artifactId>handlebars</artifactId>
+				<version>${handlebars.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.google.auto.factory</groupId>
+				<artifactId>auto-factory</artifactId>
+				<version>${google-autofactory-version}</version>
+			</dependency>
+
+			<!-- TESTING DEPENDENCIES -->
+			<dependency>
+				<groupId>org.junit.jupiter</groupId>
+				<artifactId>junit-jupiter</artifactId>
+				<version>${junit.version}</version>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.mockito</groupId>
+				<artifactId>mockito-core</artifactId>
+				<version>${mockito.version}</version>
+				<scope>test</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 
 	<build>
 		<plugins>
@@ -91,6 +143,23 @@
 				<version>${mvn.surefire.plugin.version}</version>
 			</plugin>
 		</plugins>
+
+		<!-- default resources configuration which will filter your module descriptors -->
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<includes>
+					<include>**/*</include>
+				</includes>
+			</resource>
+			<resource>
+				<filtering>true</filtering>
+				<directory>src/main/resources</directory>
+				<includes>
+					<include>META-INF/magnolia/*</include>
+				</includes>
+			</resource>
+		</resources>
 	</build>
 
 	<repositories>
@@ -108,6 +177,11 @@
 			<snapshots>
 				<enabled>false</enabled>
 			</snapshots>
+		</repository>
+		<!-- Vaadin -->
+		<repository>
+			<id>vaadin-addons</id>
+			<url>https://maven.vaadin.com/vaadin-addons</url>
 		</repository>
 	</repositories>
 
