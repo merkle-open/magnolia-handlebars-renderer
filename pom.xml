@@ -41,7 +41,7 @@
 		<google-autofactory-version>1.0.1</google-autofactory-version>
 		<magnolia.blossom.version>3.6.2</magnolia.blossom.version>
 		<spring.version>5.3.27</spring.version>
-		<apache-commons-text.version>1.9</apache-commons-text.version>
+		<apache-commons-text.version>1.10.0</apache-commons-text.version>
 		<java-poet.version>1.13.0</java-poet.version>
 
 		<!--Test dependency versions-->
