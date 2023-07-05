@@ -31,6 +31,7 @@
     <modules>
         <module>light-development</module>
 		<module>blossom</module>
+		<module>blossom-reference-generator</module>
 	</modules>
 
     <properties>
@@ -40,6 +41,8 @@
 		<google-autofactory-version>1.0.1</google-autofactory-version>
 		<magnolia.blossom.version>3.6.2</magnolia.blossom.version>
 		<spring.version>5.3.27</spring.version>
+		<apache-commons-text.version>1.9</apache-commons-text.version>
+		<java-poet.version>1.13.0</java-poet.version>
 
 		<!--Test dependency versions-->
 		<junit.version>5.7.1</junit.version>
@@ -52,6 +55,7 @@
 		<mvn.surefire.plugin.version>3.0.0-M7</mvn.surefire.plugin.version>
 		<mvn.gpg.plugin.version>3.0.1</mvn.gpg.plugin.version>
 		<mvn.nexus-staging.plugin.version>1.6.13</mvn.nexus-staging.plugin.version>
+		<mvn.plugin.version>3.9.0</mvn.plugin.version>
 
 		<javaVersion>11</javaVersion>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -98,6 +102,30 @@
 				<version>${google-autofactory-version}</version>
 			</dependency>
 
+			<dependency>
+				<groupId>org.apache.maven</groupId>
+				<artifactId>maven-plugin-api</artifactId>
+				<version>${mvn.plugin.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.maven.plugin-tools</groupId>
+				<artifactId>maven-plugin-annotations</artifactId>
+				<version>${mvn.plugin.version}</version>
+				<scope>provided</scope>
+			</dependency>
+
+			<dependency>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons-text</artifactId>
+				<version>${apache-commons-text.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.squareup</groupId>
+				<artifactId>javapoet</artifactId>
+				<version>${java-poet.version}</version>
+			</dependency>
+
 			<!-- TESTING DEPENDENCIES -->
 			<dependency>
 				<groupId>org.junit.jupiter</groupId>
@@ -115,6 +143,15 @@
 	</dependencyManagement>
 
 	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-plugin-plugin</artifactId>
+					<version>${mvn.plugin.version}</version>
+				</plugin>
+			</plugins>
+		</pluginManagement>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
