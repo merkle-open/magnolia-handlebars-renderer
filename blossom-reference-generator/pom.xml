@@ -9,8 +9,9 @@
         <version>0.0.2-SNAPSHOT</version>
     </parent>
 
-    <artifactId>magnolia-handlebars-renderer</artifactId>
-    <name>HandlebarsRenderer - Light-Development</name>
+    <artifactId>magnolia-handlebars-blossom-reference-generator</artifactId>
+    <name>HandlebarsRenderer - referenceGenerator</name>
+    <packaging>maven-plugin</packaging>
 
     <properties>
         <maven.deploy.skip>false</maven.deploy.skip>
@@ -18,40 +19,42 @@
 
     <dependencies>
         <dependency>
+            <groupId>org.apache.maven</groupId>
+            <artifactId>maven-plugin-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.maven.plugin-tools</groupId>
+            <artifactId>maven-plugin-annotations</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
             <groupId>info.magnolia</groupId>
             <artifactId>magnolia-core</artifactId>
         </dependency>
         <dependency>
-            <groupId>info.magnolia</groupId>
-            <artifactId>magnolia-rendering</artifactId>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-text</artifactId>
         </dependency>
         <dependency>
-            <groupId>info.magnolia</groupId>
-            <artifactId>magnolia-templating</artifactId>
+            <groupId>com.squareup</groupId>
+            <artifactId>javapoet</artifactId>
         </dependency>
         <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.github.jknack</groupId>
-            <artifactId>handlebars</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.google.auto.factory</groupId>
-            <artifactId>auto-factory</artifactId>
+            <groupId>javax.annotation</groupId>
+            <artifactId>javax.annotation-api</artifactId>
         </dependency>
 
         <!-- TESTING DEPENDENCIES -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
-            <scope>test</scope>
+            <version>${junit.version}</version>
         </dependency>
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
-            <scope>test</scope>
+            <version>${mockito.version}</version>
         </dependency>
     </dependencies>
+
 </project>
