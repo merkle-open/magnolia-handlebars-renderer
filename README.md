@@ -2,6 +2,8 @@
 
 Handlebars implementation of magnolia renderer using [jknack](https://github.com/jknack/handlebars.java) library.
 
+See [this README](blossom-reference-generator/README.md) for documentation on the blosom reference generator maven plugin.
+
 ## Setup
 ### DI-Bindings
 - com.github.jknack.handlebars.io.ClassPathTemplateLoader
