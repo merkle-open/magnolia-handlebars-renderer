@@ -12,7 +12,7 @@ This maven plugin generates java classes for handlebars templates defined in the
 			<configuration>
 				<packageName>com.namics.blitzdings.web.theme.templates</packageName>
 				<templateScriptClass>com.namics.blitzdings.web.theme.templates.HandlebarsTemplateScript</templateScriptClass>
-				<frontendSrcRoot>${basedir}/src/main/resources/frontend/src</frontendSrcRoot>
+				<handlebarsSrcRoot>${basedir}/src/main/resources/frontend/src</handlebarsSrcRoot>
 				<includeHandlebarFiles>
 					<includeHandlebarFile>patterns/**.hbs</includeHandlebarFile>
 					<includeHandlebarFile>views/magnolia/**.hbs</includeHandlebarFile>
