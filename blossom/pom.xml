@@ -38,6 +38,11 @@
             <artifactId>auto-factory</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+        </dependency>
+
         <!-- TESTING DEPENDENCIES -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
