@@ -11,8 +11,6 @@ import java.util.Optional;
 import java.util.Set;
 
 public class CachedAssetHelper implements NamedHelper<Object> {
-	private static final String DEFAULT_THEME = "default";
-
 	private final AssetLinkProvider assetLinkProvider;
 
 	@Inject
@@ -22,6 +20,10 @@ public class CachedAssetHelper implements NamedHelper<Object> {
 
 	protected String getFrontendAssetsPath() {
 		return "/frontend/assets";
+	}
+
+	protected String getDefaultTheme() {
+		return "default";
 	}
 
 	/*
@@ -51,7 +53,7 @@ public class CachedAssetHelper implements NamedHelper<Object> {
 		final boolean absolute = options.hash("absolute", false);
 		final String theme = Optional
 				.ofNullable((String) options.context.get("theme.id"))
-				.orElse(DEFAULT_THEME);
+				.orElseGet(this::getDefaultTheme);
 
 		return assetLinkProvider.getAssetLink(theme, name, timestamp, absolute);
 	}
