@@ -4,6 +4,7 @@ import com.squareup.javapoet.*;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.annotation.processing.Generated;
+import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Modifier;
 import java.io.File;
 import java.io.IOException;
@@ -16,7 +17,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class HandlebarTemplatesGenerator {
-
+	private static final String AVOID_KEYWORD_SUFFIX = "Pattern";
 	private final ClassNameNormalizer classNameNormalizer = new ClassNameNormalizer();
 	private final Config config;
 
@@ -159,7 +160,13 @@ public class HandlebarTemplatesGenerator {
 	}
 
 	private String normalizePackage(final String packageName) {
-		return packageName.toLowerCase(Locale.ROOT).replaceAll("[^a-z]", "");
+		final String normalizedName = packageName
+				.toLowerCase(Locale.ROOT)
+				.replaceAll("[^a-z]", "");
+		if (SourceVersion.isKeyword(normalizedName)) {
+			return normalizedName + AVOID_KEYWORD_SUFFIX;
+		}
+		return normalizedName;
 	}
 
 	private String removeExtension(final String filePath){
