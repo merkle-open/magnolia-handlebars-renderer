@@ -3,10 +3,9 @@ package com.merkle.oss.magnolia.renderer.handlebars.utils;
 import com.google.auto.factory.AutoFactory;
 import com.google.auto.factory.Provided;
 import info.magnolia.context.MgnlContext;
-import org.apache.commons.text.StringSubstitutor;
 
 import java.io.IOException;
-import java.util.Map;
+import java.nio.file.Path;
 import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -36,7 +35,7 @@ public class AssetLinkProvider {
         final boolean absolute
     ) throws IOException {
         return toAbsolutePath(
-            addContextPath(addResourcePrefix(addTimestamp(theme, assetPath, timestamp))),
+            addContextPath(addResourcePrefix(getPath(theme, assetPath, timestamp))),
             absolute
         );
     }
@@ -56,23 +55,12 @@ public class AssetLinkProvider {
         return path;
     }
 
-    private String addTimestamp(final String theme, final String path, final boolean shouldApply) throws IOException {
-        if (shouldApply) {
-            final Matcher matcher = PATH_SUFFIX_PATTERN.matcher(path);
-            if (matcher.find()) {
-                final String filePath = format("${frontendAssetsPath}/${theme}/${path}", Map.of(
-                    "frontendAssetsPath", frontendAssetsPath,
-                    "theme", theme,
-                    // check if path is a svg icon (e.g. /svg/icons.svg#arrowLeft)
-                    "path", matcher.group(1)
-                ));
-                return timestampUtil.addTimestamp(filePath) + Optional.ofNullable(matcher.group(2)).orElse("");
-            }
+    private String getPath(final String theme, final String path, final boolean shouldApplyTimestamp) throws IOException {
+        final Matcher matcher = PATH_SUFFIX_PATTERN.matcher(path);
+        if (matcher.find()) {
+            final String filePath = Path.of(frontendAssetsPath, theme, matcher.group(1)).toString();
+            return shouldApplyTimestamp ? timestampUtil.addTimestamp(filePath) : filePath + Optional.ofNullable(matcher.group(2)).orElse("");
         }
-        return path;
-    }
-
-    private String format(final String template, Map<String, String> placeholder) {
-        return new StringSubstitutor(placeholder).replace(template);
+        throw new IllegalArgumentException("Couldn't match path"+path);
     }
 }
