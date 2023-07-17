@@ -6,9 +6,9 @@ import info.magnolia.context.MgnlContext;
 import java.io.IOException;
 import java.util.Set;
 
-public class AppContextHelper implements NamedHelper<String> {
+public class AppContextHelper implements NamedHelper<Object> {
 
-	public CharSequence apply(final String key, Options options) throws IOException {
+	public CharSequence apply(final Object context, Options options) {
 		return MgnlContext.getContextPath();
 	}
 
