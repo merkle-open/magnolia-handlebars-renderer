@@ -11,19 +11,20 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class ComponentHelper implements NamedHelper<Object> {
+public class PatternHelper implements NamedHelper<Object> {
 	private static final Set<String> IGNORED_PROPERTIES = Set.of("name", "data", "type");
 
 	private final TemplateScriptLocator locator;
 
 	@Inject
-	public ComponentHelper(final TemplateScriptLocator locator) {
+	public PatternHelper(final TemplateScriptLocator locator) {
 		this.locator = locator;
 	}
 
 	/*
-	 * {{component name='Bubble' template="bubble" data='bubble' firstRow='CHF'}}
+	 * {{pattern name='Bubble' template="bubble" data='bubble' firstRow='CHF'}}
 	 */
+	@Override
 	public CharSequence apply(final Object modelParam, final Options options) throws IOException {
 		final String componentName = Optional.ofNullable((String) options.hash("name")).orElseThrow(() ->
 				new IllegalArgumentException("No name supplied!")
