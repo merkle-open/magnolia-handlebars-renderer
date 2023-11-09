@@ -22,6 +22,10 @@ public class CachedAssetHelper implements NamedHelper<Object> {
 		return "/frontend/assets";
 	}
 
+	protected Optional<String> getTheme(final Object context, final Options options) {
+		return Optional.ofNullable((String) options.context.get("theme.id"));
+	}
+
 	protected String getDefaultTheme() {
 		return "default";
 	}
@@ -51,9 +55,7 @@ public class CachedAssetHelper implements NamedHelper<Object> {
 				.orElseThrow(() -> new NullPointerException("name is missing!"));
 		final boolean timestamp = options.hash("timestamp", true);
 		final boolean absolute = options.hash("absolute", false);
-		final String theme = Optional
-				.ofNullable((String) options.context.get("theme.id"))
-				.orElseGet(this::getDefaultTheme);
+		final String theme = getTheme(context, options).orElseGet(this::getDefaultTheme);
 
 		return assetLinkProvider.getAssetLink(theme, name, timestamp, absolute);
 	}
