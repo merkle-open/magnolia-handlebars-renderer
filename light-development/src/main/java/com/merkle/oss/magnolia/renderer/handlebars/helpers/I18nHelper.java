@@ -28,7 +28,7 @@ public class I18nHelper implements NamedHelper<String> {
 	}
 
 	@Override
-	public CharSequence apply(final String key, final Options options) throws IOException {
+	public CharSequence apply(final String key, final Options options) {
 		final Node node = ((ContentMap) options.get("content")).getJCRNode();
 		final Locale locale = localeProvider.getLocale(node);
 		final SimpleTranslator simpleTranslator = new SimpleTranslator(translationService, new FixedLocaleProvider(locale));

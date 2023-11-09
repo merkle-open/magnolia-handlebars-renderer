@@ -45,57 +45,7 @@ See [this README](blossom-reference-generator/README.md) for documentation on th
 ```
 
 ## Helpers
-Helpers must extend [NamedHelper](src/main/java/com/merkle/oss/magnolia/renderer/handlebars/helpers/NamedHelper.java).
-All except magnolia helpers (page, area, component) need to be bound manually. <br>
-See package `com.merkle.oss.magnolia.renderer.handlebars.helpers` for available helpers.
-
-### cms-page
-The [PageElement](https://nexus.magnolia-cms.com/content/sites/magnolia.public.sites/ref/5.6.7/apidocs/info/magnolia/templating/elements/PageElement.html) 
-Java class embeds the JavaScript and CSS needed to edit pages on the author instance. The output goes in the head element in the page HTML.
-<br>
-```handlebars
-{{{cms-page}}}
-```
-
-### cms-area
-The cms-area is used to render an area and any components inside it. Editors can add components inside the area. Available components are configured in the area definition.
-
-The helper references an area by its name. The area name is the node that contains the area definition such as ContentArea, Footer or Stage.
-The result on the page is an area bar and an end marker. The title property is rendered on the bar. When an editor clicks the add icon in the new component box they can add components inside the area.
-
-![cms-area](assets/cms-area-helper.png)
-```handlebars
-{{{cms-area name='content-area' area="ContentArea" key=value}}}
-```
-Parameters:
-
-| Key      |Type       |Description
-|----------|-----------|-----------
-| name     | String    |Name of the area element
-| area     | String    |Name of the area definition node such as ContentArea, Footer or Stage.
-
-Additional key-value params are added to the context. Can be used to pass key-value pairs to components inside this area.
-#### supplier-page
-The 'mgnl:supplierPage' node property can be set to reference another page which contains the desired area-node.
-
-### cms-component
-The cms-component helper renders a component. This tag is commonly used inside the area hbs file referenced by the cms-area helper.
-
-The content to render, and possibly edit in case of an editable component, is passed in the data attribute. 
-On the author instance the directive renders a component toolbar. The value of the title property in the component definition is rendered on the bar.
-![cms-area](assets/cms-component-helper.png)
-```handlebars
-{{#each components}}
-    {{{cms-component data=../componentData key=value}}}
-{{/each}}
-```
-Parameters:
-
-| Key      | Type    |Description
-|----------|---------|-----------
-| data     | Map     | content to render
-
-Additional key-value params are added to the context. Can be used to pass key-value pairs to components inside this area.
+See separate [Helpers](Helpers.md) documentation.
 
 ## Custom ValueResolver
 Custom jknack value resolvers can be configured by implementing a custom ValueResolversProvider

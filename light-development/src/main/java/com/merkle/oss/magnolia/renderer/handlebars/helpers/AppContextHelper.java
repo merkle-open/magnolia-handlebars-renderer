@@ -8,6 +8,7 @@ import java.util.Set;
 
 public class AppContextHelper implements NamedHelper<Object> {
 
+	@Override
 	public CharSequence apply(final Object context, Options options) {
 		return MgnlContext.getContextPath();
 	}
