@@ -5,10 +5,7 @@ import com.merkle.oss.magnolia.renderer.handlebars.helpers.magnolia.TemplateScri
 
 import javax.inject.Inject;
 import java.io.IOException;
-import java.util.Collection;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class PatternHelper implements NamedHelper<Object> {
@@ -55,14 +52,19 @@ public class PatternHelper implements NamedHelper<Object> {
 	}
 
 	private Optional<Object> getModelFromDataField(final Options options) {
-		return Optional
-				.ofNullable(options.hash("data"))
-				.map(data -> {
-					if (data instanceof String) {
-						return options.context.get((String) data);
-					}
-					return data;
-				});
+		if (options.hash.containsKey("data")) {
+			final Object resolvedData = Optional
+					.ofNullable(options.hash("data"))
+					.map(data -> {
+						if(data instanceof String) {
+							return options.context.get((String)data);
+						}
+						return data;
+					})
+					.orElseGet(Collections::emptyMap);
+			return Optional.of(resolvedData);
+		}
+		return Optional.empty();
 	}
 
 	private Map<String, Object> filter(final Map<String, Object> hash, final Collection<String> ignoreKeys) {
