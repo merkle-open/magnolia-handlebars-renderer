@@ -12,10 +12,6 @@
     <artifactId>magnolia-handlebars-renderer</artifactId>
     <name>HandlebarsRenderer - Light-Development</name>
 
-    <properties>
-        <maven.deploy.skip>false</maven.deploy.skip>
-    </properties>
-
     <dependencies>
         <dependency>
             <groupId>info.magnolia</groupId>

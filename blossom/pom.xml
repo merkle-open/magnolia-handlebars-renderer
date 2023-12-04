@@ -12,10 +12,6 @@
     <artifactId>magnolia-handlebars-renderer-blossom</artifactId>
     <name>HandlebarsRenderer - Blossom</name>
 
-    <properties>
-        <maven.deploy.skip>false</maven.deploy.skip>
-    </properties>
-
     <dependencies>
         <dependency>
             <groupId>com.namics.oss.magnolia</groupId>
