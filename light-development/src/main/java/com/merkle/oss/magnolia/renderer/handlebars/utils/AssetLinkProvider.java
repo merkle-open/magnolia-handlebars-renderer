@@ -59,7 +59,7 @@ public class AssetLinkProvider {
         final Matcher matcher = PATH_SUFFIX_PATTERN.matcher(path);
         if (matcher.find()) {
             final String filePath = Path.of(frontendAssetsPath, theme, matcher.group(1)).toString();
-            return shouldApplyTimestamp ? timestampUtil.addTimestamp(filePath) : filePath + Optional.ofNullable(matcher.group(2)).orElse("");
+            return (shouldApplyTimestamp ? timestampUtil.addTimestamp(filePath) : filePath) + Optional.ofNullable(matcher.group(2)).orElse("");
         }
         throw new IllegalArgumentException("Couldn't match path"+path);
     }
