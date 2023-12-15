@@ -18,7 +18,7 @@ import java.util.Set;
 public class BlossomHandlebarsRenderer extends HandlebarsRenderer {
 
 	@Inject
-	private BlossomHandlebarsRenderer(
+	public BlossomHandlebarsRenderer(
 			final RenderingEngine renderingEngine,
 			final Set<NamedHelper> helpers,
 			final ClassPathTemplateLoader classPathTemplateLoader,
