@@ -11,14 +11,14 @@ import java.util.Optional;
 import java.util.Set;
 
 public class CachedAssetHelper implements NamedHelper<Object> {
-	private final AssetLinkProvider assetLinkProvider;
+	private final AssetLinkProviderFactory assetLinkProviderFactory;
 
 	@Inject
 	public CachedAssetHelper(final AssetLinkProviderFactory assetLinkProviderFactory) {
-		this.assetLinkProvider = assetLinkProviderFactory.create(getFrontendAssetsPath());
+		this.assetLinkProviderFactory = assetLinkProviderFactory;
 	}
 
-	protected String getFrontendAssetsPath() {
+	protected String getFrontendAssetsPath(final Object context, final Options options) {
 		return "/frontend/assets";
 	}
 
@@ -57,7 +57,7 @@ public class CachedAssetHelper implements NamedHelper<Object> {
 		final boolean absolute = options.hash("absolute", false);
 		final String theme = getTheme(context, options).orElseGet(this::getDefaultTheme);
 
-		return assetLinkProvider.getAssetLink(theme, name, timestamp, absolute);
+		return assetLinkProviderFactory.create(getFrontendAssetsPath(context, options)).getAssetLink(theme, name, timestamp, absolute);
 	}
 
 	private String replaceLang(final String path, final Options options) {
