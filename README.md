@@ -10,7 +10,7 @@ See [this README](blossom-reference-generator/README.md) for documentation on th
 - com.merkle.oss.magnolia.renderer.handlebars.utils.DateUtil
 - com.merkle.oss.magnolia.renderer.handlebars.utils.LinkUtil
 - com.merkle.oss.magnolia.renderer.handlebars.utils.LocaleProvider
-- com.merkle.oss.magnolia.renderer.handlebars.helpers.magnolia.TemplateScriptLocator
+- com.merkle.oss.magnolia.renderer.handlebars.helpers.PatternHelper$TemplateScriptLocator
 
 ### Dependencies
 #### Light-Development

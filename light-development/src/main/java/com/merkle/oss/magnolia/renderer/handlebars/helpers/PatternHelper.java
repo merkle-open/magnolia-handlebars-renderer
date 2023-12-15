@@ -1,7 +1,6 @@
 package com.merkle.oss.magnolia.renderer.handlebars.helpers;
 
 import com.github.jknack.handlebars.*;
-import com.merkle.oss.magnolia.renderer.handlebars.helpers.magnolia.TemplateScriptLocator;
 
 import javax.inject.Inject;
 import java.io.IOException;
@@ -46,9 +45,9 @@ public class PatternHelper implements NamedHelper<Object> {
 		return Optional
 				.ofNullable((String) options.hash("type"))
 				.map(type ->
-						locator.get(locatorKey, type)
+						locator.get(locatorKey, options, type)
 				)
-				.orElseGet(() -> locator.get(locatorKey));
+				.orElseGet(() -> locator.get(locatorKey, options));
 	}
 
 	private Optional<Object> getModelFromDataField(final Options options) {
@@ -83,5 +82,10 @@ public class PatternHelper implements NamedHelper<Object> {
 	@Override
 	public Set<String> names() {
 		return Set.of("pattern");
+	}
+
+	public interface TemplateScriptLocator {
+		String get(String key, Options options);
+		String get(String key, Options options, String type);
 	}
 }
