@@ -27,6 +27,7 @@ Parameters:
 |----------|-----------|-----------
 | name     | String    |Name of the area element
 | area     | String    |Name of the area definition node such as ContentArea, Footer or Stage.
+| editable | boolean   |By setting the value to false you can prevent area editing.
 
 Additional key-value params are added to the context. Can be used to pass key-value pairs to components inside this area.
 #### supplier-page

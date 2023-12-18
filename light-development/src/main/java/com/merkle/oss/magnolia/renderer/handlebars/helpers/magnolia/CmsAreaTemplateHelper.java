@@ -60,6 +60,7 @@ public class CmsAreaTemplateHelper extends AbstractCmsTemplateHelper<Object> {
 		final String name = options.hash("name");
 		// area name for BE, ignored by FE
 		final String area = StringUtils.defaultIfBlank(options.hash("area"), name);
+		final boolean editable = options.hash("editable", true);
 
 		final RenderingModel<?> model = getRenderingModel(options.context).orElseThrow(() ->
 				new IllegalArgumentException("Rendering model not present!")
@@ -84,6 +85,8 @@ public class CmsAreaTemplateHelper extends AbstractCmsTemplateHelper<Object> {
 		areaElement.setArea(areaState.getAreaDefinition());
 		areaElement.setName(name);
 		areaElement.setContextAttributes(options.hash);
+
+		areaElement.setEditable(editable);
 
 		return Optional.of(render(areaElement));
 	}
