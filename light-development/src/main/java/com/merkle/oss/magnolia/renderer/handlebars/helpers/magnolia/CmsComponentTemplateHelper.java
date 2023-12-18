@@ -40,7 +40,7 @@ public class CmsComponentTemplateHelper extends AbstractCmsTemplateHelper<Conten
 	}
 
 	@Override
-	protected CharSequence applySafe(final ContentMap contentMap, final Options options) throws RepositoryException, RenderException, IOException {
+	protected Optional<CharSequence> applySafe(final ContentMap contentMap, final Options options) throws RepositoryException, RenderException, IOException {
 		final Node node = contentMap.getJCRNode();
 		final Map<String, Object> combinedContext = getContext(options);
 
@@ -56,7 +56,7 @@ public class CmsComponentTemplateHelper extends AbstractCmsTemplateHelper<Conten
 		componentElement.setPath(node.getPath());
 		componentElement.setContextAttributes(combinedContext);
 
-		return render(componentElement);
+		return Optional.of(render(componentElement));
 	}
 
 	private Map<String, Object> getContext(final Options options) {

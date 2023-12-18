@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.lang.invoke.MethodHandles;
+import java.util.Optional;
 
 public abstract class AbstractCmsTemplateHelper<T> implements NamedHelper<T> {
 	private static final Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
@@ -24,7 +25,7 @@ public abstract class AbstractCmsTemplateHelper<T> implements NamedHelper<T> {
 	@Override
 	public CharSequence apply(final T context, final Options options) {
 		try {
-			return applySafe(context, options);
+			return applySafe(context, options).orElse(StringUtils.EMPTY);
 		} catch (Exception e) {
 			if (templatingFunctions.isAuthorInstance() && templatingFunctions.isEditMode()) {
 				throw Exceptions.sneak().handle(e);
@@ -35,7 +36,7 @@ public abstract class AbstractCmsTemplateHelper<T> implements NamedHelper<T> {
 		return StringUtils.EMPTY;
 	}
 
-	protected abstract CharSequence applySafe(T context, Options options) throws Exception;
+	protected abstract Optional<CharSequence> applySafe(T context, Options options) throws Exception;
 
 	protected CharSequence render(final AbstractContentTemplatingElement templatingElement) throws RenderException, IOException {
 		final StringBuilder buffer = new StringBuilder();

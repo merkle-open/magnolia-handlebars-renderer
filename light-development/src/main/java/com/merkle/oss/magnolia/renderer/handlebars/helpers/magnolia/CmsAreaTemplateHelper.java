@@ -27,7 +27,6 @@ import info.magnolia.templating.functions.TemplatingFunctions;
 import info.magnolia.templating.module.TemplatingModule;
 import org.apache.commons.lang3.StringUtils;
 
-import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Provider;
 import javax.jcr.*;
@@ -37,6 +36,7 @@ import java.util.Optional;
 import java.util.Set;
 
 public class CmsAreaTemplateHelper extends AbstractCmsTemplateHelper<Object> {
+	public static final String SUPPLIER_PAGE_PROPERTY = "mgnl:supplierPage";
 	private final TemplateDefinitionRegistry templateDefinitionRegistry;
 	private final RenderingEngine renderingEngine;
 	private final AreaCreationListener areaCreationListener;
@@ -55,7 +55,7 @@ public class CmsAreaTemplateHelper extends AbstractCmsTemplateHelper<Object> {
 	}
 
 	@Override
-	public CharSequence applySafe(final Object ignored, final Options options) throws IOException, RepositoryException, RenderException {
+	public Optional<CharSequence> applySafe(final Object ignored, final Options options) throws IOException, RepositoryException, RenderException {
 		// placeholder/area name used by FE (fallback for BE if 'area' is not set)
 		final String name = options.hash("name");
 		// area name for BE, ignored by FE
@@ -64,31 +64,28 @@ public class CmsAreaTemplateHelper extends AbstractCmsTemplateHelper<Object> {
 		final RenderingModel<?> model = getRenderingModel(options.context).orElseThrow(() ->
 				new IllegalArgumentException("Rendering model not present!")
 		);
-		final Node node = model.getNode();
+		final Node node = getSupplierPage(model.getNode()).orElseGet(model::getNode);
 
-		@Nullable final AreaState areaState = getOrCreateAreaState(area, node).orElse(null);
-		if (areaState != null) {
-			final Node areaStateNode = areaState.getNode();
-			final String workspace = areaStateNode.getSession().getWorkspace().getName();
-			final String nodeIdentifier = areaStateNode.getIdentifier();
-			final String path = areaStateNode.getPath();
+		final AreaState areaState = getOrCreateAreaState(area, node);
+		final Node areaStateNode = areaState.getNode();
+		final String workspace = areaStateNode.getSession().getWorkspace().getName();
+		final String nodeIdentifier = areaStateNode.getIdentifier();
+		final String path = areaStateNode.getPath();
 
-			//Magnolia's AreaElement.begin calls render with empty HashMap --> use ContextObjectsRenderingEngineWrapper
-			final AreaElement areaElement = Components.getComponentProvider().newInstance(
-					CustomAvailableComponentsAreaElement.class,
-					new ContextObjectsRenderingEngineWrapper(renderingEngine, options.hash)
-			);
-			areaElement.setContent(areaStateNode);
-			areaElement.setWorkspace(workspace);
-			areaElement.setNodeIdentifier(nodeIdentifier);
-			areaElement.setPath(path);
-			areaElement.setArea(areaState.getAreaDefinition());
-			areaElement.setName(name);
-			areaElement.setContextAttributes(options.hash);
+		//Magnolia's AreaElement.begin calls render with empty HashMap --> use ContextObjectsRenderingEngineWrapper
+		final AreaElement areaElement = Components.getComponentProvider().newInstance(
+				CustomAvailableComponentsAreaElement.class,
+				new ContextObjectsRenderingEngineWrapper(renderingEngine, options.hash)
+		);
+		areaElement.setContent(areaStateNode);
+		areaElement.setWorkspace(workspace);
+		areaElement.setNodeIdentifier(nodeIdentifier);
+		areaElement.setPath(path);
+		areaElement.setArea(areaState.getAreaDefinition());
+		areaElement.setName(name);
+		areaElement.setContextAttributes(options.hash);
 
-			return render(areaElement);
-		}
-		throw new RuntimeException("Couldn't create areaState for area with name " + area + " (check naming)");
+		return Optional.of(render(areaElement));
 	}
 
 	@SuppressWarnings("rawtypes")
@@ -106,19 +103,14 @@ public class CmsAreaTemplateHelper extends AbstractCmsTemplateHelper<Object> {
 				);
 	}
 
-	private Optional<AreaState> getOrCreateAreaState(final String name, final Node node) {
+	private AreaDefinition getAreaDefinition(final String name, final Node node) throws RenderException {
 		return getNearestAncestorTemplate(node)
 				.flatMap(this::getTemplateDefinition)
 				.flatMap(templateDefinition ->
 						getAreaDefinition(name, templateDefinition.getAreas())
 				)
-				.flatMap(areaDefinition ->
-						getOrCreateAreaState(name, node, areaDefinition)
-				)
-				.or(() ->
-						getSupplierPage(node).flatMap(supplierPage ->
-								getOrCreateAreaState(name, supplierPage)
-						)
+				.orElseThrow(() ->
+						new RenderException("Couldn't get areaDefinition. " + name + " " + NodeUtil.getPathIfPossible(node))
 				);
 	}
 
@@ -158,10 +150,18 @@ public class CmsAreaTemplateHelper extends AbstractCmsTemplateHelper<Object> {
 				.findFirst();
 	}
 
-	private Optional<AreaState> getOrCreateAreaState(final String name, final Node node, final AreaDefinition areaDefinition) {
-		return getOrCreateAreaNode(name, node, areaDefinition).map(areaNode ->
-				new AreaState(areaDefinition, areaNode)
-		);
+	private AreaState getOrCreateAreaState(final String name, final Node node) throws RenderException {
+		final AreaDefinition areaDefinition = getAreaDefinition(name, node);
+		if(Boolean.FALSE.equals(areaDefinition.getCreateAreaNode())) {
+			return new AreaState(areaDefinition, node);
+		}
+		return getOrCreateAreaNode(name, node, areaDefinition)
+				.map(areaNode ->
+						new AreaState(areaDefinition, areaNode)
+				)
+				.orElseThrow(() ->
+						new RenderException("Couldn't create areaState. " + name + " " + NodeUtil.getPathIfPossible(node))
+				);
 	}
 
 	private Optional<Node> getOrCreateAreaNode(final String name, final Node node, final AreaDefinition areaDefinition) {
@@ -188,16 +188,15 @@ public class CmsAreaTemplateHelper extends AbstractCmsTemplateHelper<Object> {
 	}
 
 	private Optional<Node> getSupplierPage(final Node node) {
-		return Optional.ofNullable(PropertyUtil.getString(node, "mgnl:supplierPage"))
-				.flatMap(supplierPageId -> {
-					try {
-						return Optional.of(node.getSession().getNodeByIdentifier(supplierPageId));
-					} catch (ItemNotFoundException e) {
-						return Optional.empty();
-					} catch (RepositoryException e) {
-						throw Exceptions.sneak().handle(e);
-					}
-				});
+		return Optional.ofNullable(PropertyUtil.getString(node, SUPPLIER_PAGE_PROPERTY)).flatMap(supplierPageId -> {
+			try {
+				return Optional.of(node.getSession().getNodeByIdentifier(supplierPageId));
+			} catch (ItemNotFoundException e) {
+				return Optional.empty();
+			} catch (RepositoryException e) {
+				throw Exceptions.sneak().handle(e);
+			}
+		});
 	}
 
 	@Override

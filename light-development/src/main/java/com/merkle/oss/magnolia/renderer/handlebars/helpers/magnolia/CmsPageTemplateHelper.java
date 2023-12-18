@@ -9,6 +9,7 @@ import info.magnolia.templating.functions.TemplatingFunctions;
 import javax.inject.Inject;
 import java.io.IOException;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 public class CmsPageTemplateHelper extends AbstractCmsTemplateHelper<Map<String, Object>> {
@@ -19,9 +20,9 @@ public class CmsPageTemplateHelper extends AbstractCmsTemplateHelper<Map<String,
 	}
 
 	@Override
-	public CharSequence applySafe(final Map<String, Object> pageModelMap, final Options options) throws RenderException, IOException {
+	public Optional<CharSequence> applySafe(final Map<String, Object> pageModelMap, final Options options) throws RenderException, IOException {
 		final PageElement pageElement = Components.getComponentProvider().newInstance(PageElement.class);
-		return render(pageElement);
+		return Optional.of(render(pageElement));
 	}
 
 	@Override
