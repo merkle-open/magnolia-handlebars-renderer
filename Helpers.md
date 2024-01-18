@@ -59,7 +59,7 @@ The pattern helper renders a pattern, using [atomic design](https://bradfrost.co
 ```handlebars
 {{pattern name='accordion' type="cms" template="accordion-dynamic" data=this key=value}}
 {{pattern name='accordion' data=someObjectFromCurrentContext }}
-{{pattern name='accordion' data=null key=value }}
+{{pattern name='accordion' key=value }}
 ```
 Parameters:
 
@@ -68,7 +68,7 @@ Parameters:
 | name     | String | Name of the template
 | type     | String | if there are multiple patterns with the same name (e.g. cms/image atom/image) - optional
 | template | String | if there are multiple templates (==hbs files) in a pattern (see screenshot) - optional, fallback to pattern name
-| data     | Map    | content to render. If not specified data from current context is passed (data=this). <br>For compatibility reasons type string is also supported (will eventually be dropped - use map / object instead) 
+| data     | Map    | content to render. If not specified data is cleared. To pass data from parent context use data=this. <br>For compatibility reasons type string is also supported (will eventually be dropped - use map / object instead) 
 
 Additional key-value params are added to the context.
 

@@ -28,7 +28,7 @@ public class PatternHelper implements NamedHelper<Object> {
 		final String templateScriptLocation = getTemplateScriptLocation(componentName, options);
 		final Template componentTemplate = options.handlebars.compile(templateScriptLocation);
 
-		final Object model = getModelFromDataField(options).orElse(modelParam);
+		final Object model = getModelFromDataField(options).orElseGet(Collections::emptyMap);
 
 		final Context combinedContext = new InversedLookupOrderContext(options.context, model)
 				.combine(filter(options.hash, IGNORED_PROPERTIES));
@@ -51,19 +51,14 @@ public class PatternHelper implements NamedHelper<Object> {
 	}
 
 	private Optional<Object> getModelFromDataField(final Options options) {
-		if (options.hash.containsKey("data")) {
-			final Object resolvedData = Optional
-					.ofNullable(options.hash("data"))
-					.map(data -> {
-						if(data instanceof String) {
-							return options.context.get((String)data);
-						}
-						return data;
-					})
-					.orElseGet(Collections::emptyMap);
-			return Optional.of(resolvedData);
-		}
-		return Optional.empty();
+		return Optional
+				.ofNullable(options.hash("data"))
+				.map(data -> {
+					if (data instanceof String) {
+						return options.context.get((String) data);
+					}
+					return data;
+				});
 	}
 
 	private Map<String, Object> filter(final Map<String, Object> hash, final Collection<String> ignoreKeys) {
