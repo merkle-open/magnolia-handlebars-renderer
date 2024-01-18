@@ -66,8 +66,8 @@ public class CmsAreaTemplateHelper extends AbstractCmsTemplateHelper<Object> {
 		);
 		final Node templateNode = Optional.ofNullable((Node)options.hash("templateNode")).orElseGet(model::getNode);
 
-		final AreaDefinition areaDefinition = getAreaDefinition(name, templateNode);
-		final Node areaNode = getOrCreateAreaNode(name, templateNode, areaDefinition);
+		final AreaDefinition areaDefinition = getAreaDefinition(area, templateNode);
+		final Node areaNode = getOrCreateAreaNode(area, templateNode, areaDefinition);
 		final String workspace = areaNode.getSession().getWorkspace().getName();
 		final String nodeIdentifier = areaNode.getIdentifier();
 		final String path = areaNode.getPath();
@@ -151,7 +151,7 @@ public class CmsAreaTemplateHelper extends AbstractCmsTemplateHelper<Object> {
 			return node.getNode(name);
 		} catch (PathNotFoundException e) {
 			return createAreaNode(name, node, areaDefinition).orElseThrow(() ->
-				new RenderException("Couldn't create areaState. " + name + " " + NodeUtil.getPathIfPossible(node))
+				new RenderException("Couldn't create area node " + name + " " + NodeUtil.getPathIfPossible(node))
 			);
 		} catch (RepositoryException e) {
 			throw Exceptions.sneak().handle(e);
