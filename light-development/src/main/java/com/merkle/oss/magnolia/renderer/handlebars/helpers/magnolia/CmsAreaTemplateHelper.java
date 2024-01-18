@@ -36,7 +36,6 @@ import java.util.Optional;
 import java.util.Set;
 
 public class CmsAreaTemplateHelper extends AbstractCmsTemplateHelper<Object> {
-	public static final String SUPPLIER_PAGE_PROPERTY = "mgnl:supplierPage";
 	private final TemplateDefinitionRegistry templateDefinitionRegistry;
 	private final RenderingEngine renderingEngine;
 	private final AreaCreationListener areaCreationListener;
@@ -65,24 +64,24 @@ public class CmsAreaTemplateHelper extends AbstractCmsTemplateHelper<Object> {
 		final RenderingModel<?> model = getRenderingModel(options.context).orElseThrow(() ->
 				new IllegalArgumentException("Rendering model not present!")
 		);
-		final Node node = getSupplierPage(model.getNode()).orElseGet(model::getNode);
+		final Node templateNode = Optional.ofNullable((Node)options.hash("templateNode")).orElseGet(model::getNode);
 
-		final AreaState areaState = getOrCreateAreaState(area, node);
-		final Node areaStateNode = areaState.getNode();
-		final String workspace = areaStateNode.getSession().getWorkspace().getName();
-		final String nodeIdentifier = areaStateNode.getIdentifier();
-		final String path = areaStateNode.getPath();
+		final AreaDefinition areaDefinition = getAreaDefinition(name, templateNode);
+		final Node areaNode = getOrCreateAreaNode(name, templateNode, areaDefinition);
+		final String workspace = areaNode.getSession().getWorkspace().getName();
+		final String nodeIdentifier = areaNode.getIdentifier();
+		final String path = areaNode.getPath();
 
 		//Magnolia's AreaElement.begin calls render with empty HashMap --> use ContextObjectsRenderingEngineWrapper
 		final AreaElement areaElement = Components.getComponentProvider().newInstance(
 				CustomAvailableComponentsAreaElement.class,
 				new ContextObjectsRenderingEngineWrapper(renderingEngine, options.hash)
 		);
-		areaElement.setContent(areaStateNode);
+		areaElement.setContent(areaNode);
 		areaElement.setWorkspace(workspace);
 		areaElement.setNodeIdentifier(nodeIdentifier);
 		areaElement.setPath(path);
-		areaElement.setArea(areaState.getAreaDefinition());
+		areaElement.setArea(areaDefinition);
 		areaElement.setName(name);
 		areaElement.setContextAttributes(options.hash);
 
@@ -107,20 +106,14 @@ public class CmsAreaTemplateHelper extends AbstractCmsTemplateHelper<Object> {
 	}
 
 	private AreaDefinition getAreaDefinition(final String name, final Node node) throws RenderException {
-		return getNearestAncestorTemplate(node)
-				.flatMap(this::getTemplateDefinition)
+		final String templateId = PropertyUtil.getString(node, NodeTypes.Renderable.TEMPLATE);
+		return getTemplateDefinition(templateId)
 				.flatMap(templateDefinition ->
 						getAreaDefinition(name, templateDefinition.getAreas())
 				)
 				.orElseThrow(() ->
 						new RenderException("Couldn't get areaDefinition. " + name + " " + NodeUtil.getPathIfPossible(node))
 				);
-	}
-
-	private Optional<String> getNearestAncestorTemplate(final Node node) {
-		return Optional
-				.ofNullable(PropertyUtil.getString(node, NodeTypes.Renderable.TEMPLATE))
-				.or(() -> getParent(node).flatMap(this::getNearestAncestorTemplate));
 	}
 
 	private Optional<TemplateDefinition> getTemplateDefinition(final String templateId) {
@@ -153,25 +146,13 @@ public class CmsAreaTemplateHelper extends AbstractCmsTemplateHelper<Object> {
 				.findFirst();
 	}
 
-	private AreaState getOrCreateAreaState(final String name, final Node node) throws RenderException {
-		final AreaDefinition areaDefinition = getAreaDefinition(name, node);
-		if(Boolean.FALSE.equals(areaDefinition.getCreateAreaNode())) {
-			return new AreaState(areaDefinition, node);
-		}
-		return getOrCreateAreaNode(name, node, areaDefinition)
-				.map(areaNode ->
-						new AreaState(areaDefinition, areaNode)
-				)
-				.orElseThrow(() ->
-						new RenderException("Couldn't create areaState. " + name + " " + NodeUtil.getPathIfPossible(node))
-				);
-	}
-
-	private Optional<Node> getOrCreateAreaNode(final String name, final Node node, final AreaDefinition areaDefinition) {
+	private Node getOrCreateAreaNode(final String name, final Node node, final AreaDefinition areaDefinition) throws RenderException {
 		try {
-			return Optional.of(node.getNode(name));
+			return node.getNode(name);
 		} catch (PathNotFoundException e) {
-			return createAreaNode(name, node, areaDefinition);
+			return createAreaNode(name, node, areaDefinition).orElseThrow(() ->
+				new RenderException("Couldn't create areaState. " + name + " " + NodeUtil.getPathIfPossible(node))
+			);
 		} catch (RepositoryException e) {
 			throw Exceptions.sneak().handle(e);
 		}
@@ -190,42 +171,12 @@ public class CmsAreaTemplateHelper extends AbstractCmsTemplateHelper<Object> {
 		});
 	}
 
-	private Optional<Node> getSupplierPage(final Node node) {
-		return Optional.ofNullable(PropertyUtil.getString(node, SUPPLIER_PAGE_PROPERTY)).flatMap(supplierPageId -> {
-			try {
-				return Optional.of(node.getSession().getNodeByIdentifier(supplierPageId));
-			} catch (ItemNotFoundException e) {
-				return Optional.empty();
-			} catch (RepositoryException e) {
-				throw Exceptions.sneak().handle(e);
-			}
-		});
-	}
-
 	@Override
 	public Set<String> names() {
 		return Set.of(
 				"cms-area",
 				"placeholder"
 		);
-	}
-
-	public static final class AreaState {
-		private final AreaDefinition areaDefinition;
-		private final Node node;
-
-		private AreaState(final AreaDefinition areaDefinition, final Node node) {
-			this.areaDefinition = areaDefinition;
-			this.node = node;
-		}
-
-		public AreaDefinition getAreaDefinition() {
-			return areaDefinition;
-		}
-
-		public Node getNode() {
-			return node;
-		}
 	}
 
 	public static class CustomAvailableComponentsAreaElement extends AreaElement {

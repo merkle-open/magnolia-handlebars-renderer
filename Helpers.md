@@ -23,15 +23,14 @@ The result on the page is an area bar and an end marker. The title property is r
 ```
 Parameters:
 
-| Key      |Type       |Description
-|----------|-----------|-----------
-| name     | String    |Name of the area element
-| area     | String    |Name of the area definition node such as ContentArea, Footer or Stage.
-| editable | boolean   |By setting the value to false you can prevent area editing.
+| Key          | Type    |Description
+|--------------|---------|-----------
+| name         | String  |Name of the area element
+| area         | String  |Name of the area definition node such as ContentArea, Footer or Stage.
+| editable     | boolean |By setting the value to false you can prevent area editing.
+| templateNode | Node    |Node containing the area
 
 Additional key-value params are added to the context. Can be used to pass key-value pairs to components inside this area.
-#### supplier-page
-The 'mgnl:supplierPage' node property can be set to reference another page which contains the desired area-node.
 
 ### [cms-component](light-development/src/main/java/com/merkle/oss/magnolia/renderer/handlebars/helpers/magnolia/CmsComponentTemplateHelper.java)
 The cms-component helper renders a component. This tag is commonly used inside the area hbs file referenced by the cms-area helper.
