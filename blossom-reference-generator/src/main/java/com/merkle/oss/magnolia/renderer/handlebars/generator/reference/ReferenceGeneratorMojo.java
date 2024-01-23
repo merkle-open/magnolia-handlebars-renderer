@@ -9,7 +9,7 @@ import org.apache.maven.plugins.annotations.Parameter;
 import java.util.Set;
 
 
-@Mojo(name = "reference-generator", defaultPhase = LifecyclePhase.GENERATE_SOURCES)
+@Mojo(name = "reference-generator", defaultPhase = LifecyclePhase.GENERATE_SOURCES, threadSafe = true)
 public class ReferenceGeneratorMojo extends AbstractMojo {
 	@Parameter(property = "packageName", required = true)
 	private String packageName;
