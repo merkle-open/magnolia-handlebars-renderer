@@ -124,16 +124,6 @@ public class CmsAreaTemplateHelper extends AbstractCmsTemplateHelper<Object> {
 		}
 	}
 
-	private Optional<Node> getParent(final Node node) {
-		try {
-			return Optional.of(node.getParent());
-		} catch (ItemNotFoundException e) {
-			return Optional.empty();
-		} catch (RepositoryException e) {
-			throw Exceptions.sneak().handle(e);
-		}
-	}
-
 	private Optional<AreaDefinition> getAreaDefinition(final String name, final Map<String, AreaDefinition> areas) {
 		if (areas.containsKey(name)) {
 			return Optional.of(areas.get(name));
@@ -148,6 +138,9 @@ public class CmsAreaTemplateHelper extends AbstractCmsTemplateHelper<Object> {
 
 	private Node getOrCreateAreaNode(final String name, final Node node, final AreaDefinition areaDefinition) throws RenderException {
 		try {
+			if(Boolean.FALSE.equals(areaDefinition.getCreateAreaNode())) {
+				return node;
+			}
 			return node.getNode(name);
 		} catch (PathNotFoundException e) {
 			return createAreaNode(name, node, areaDefinition).orElseThrow(() ->
