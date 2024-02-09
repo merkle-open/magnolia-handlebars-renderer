@@ -27,6 +27,7 @@ import info.magnolia.templating.functions.TemplatingFunctions;
 import info.magnolia.templating.module.TemplatingModule;
 import org.apache.commons.lang3.StringUtils;
 
+import javax.annotation.Nullable;
 import javax.inject.Inject;
 import javax.inject.Provider;
 import javax.jcr.*;
@@ -67,27 +68,32 @@ public class CmsAreaTemplateHelper extends AbstractCmsTemplateHelper<Object> {
 		final Node templateNode = Optional.ofNullable((Node)options.hash("templateNode")).orElseGet(model::getNode);
 
 		final AreaDefinition areaDefinition = getAreaDefinition(area, templateNode);
-		final Node areaNode = getOrCreateAreaNode(area, templateNode, areaDefinition);
-		final String workspace = areaNode.getSession().getWorkspace().getName();
-		final String nodeIdentifier = areaNode.getIdentifier();
-		final String path = areaNode.getPath();
 
-		//Magnolia's AreaElement.begin calls render with empty HashMap --> use ContextObjectsRenderingEngineWrapper
-		final AreaElement areaElement = Components.getComponentProvider().newInstance(
-				CustomAvailableComponentsAreaElement.class,
-				new ContextObjectsRenderingEngineWrapper(renderingEngine, options.hash)
-		);
-		areaElement.setContent(areaNode);
-		areaElement.setWorkspace(workspace);
-		areaElement.setNodeIdentifier(nodeIdentifier);
-		areaElement.setPath(path);
-		areaElement.setArea(areaDefinition);
-		areaElement.setName(name);
-		areaElement.setContextAttributes(options.hash);
+		@Nullable
+		final Node areaNode = getOrCreateAreaNode(area, templateNode, areaDefinition).orElse(null);
+		if(areaNode != null) {
+			final String workspace = areaNode.getSession().getWorkspace().getName();
+			final String nodeIdentifier = areaNode.getIdentifier();
+			final String path = areaNode.getPath();
 
-		areaElement.setEditable(editable);
+			//Magnolia's AreaElement.begin calls render with empty HashMap --> use ContextObjectsRenderingEngineWrapper
+			final AreaElement areaElement = Components.getComponentProvider().newInstance(
+					CustomAvailableComponentsAreaElement.class,
+					new ContextObjectsRenderingEngineWrapper(renderingEngine, options.hash)
+			);
+			areaElement.setContent(areaNode);
+			areaElement.setWorkspace(workspace);
+			areaElement.setNodeIdentifier(nodeIdentifier);
+			areaElement.setPath(path);
+			areaElement.setArea(areaDefinition);
+			areaElement.setName(name);
+			areaElement.setContextAttributes(options.hash);
 
-		return Optional.of(render(areaElement));
+			areaElement.setEditable(editable);
+
+			return Optional.of(render(areaElement));
+		}
+		return Optional.empty();
 	}
 
 	@SuppressWarnings("rawtypes")
@@ -136,16 +142,14 @@ public class CmsAreaTemplateHelper extends AbstractCmsTemplateHelper<Object> {
 				.findFirst();
 	}
 
-	private Node getOrCreateAreaNode(final String name, final Node node, final AreaDefinition areaDefinition) throws RenderException {
+	private Optional<Node> getOrCreateAreaNode(final String name, final Node node, final AreaDefinition areaDefinition) throws RenderException {
 		try {
 			if(Boolean.FALSE.equals(areaDefinition.getCreateAreaNode())) {
-				return node;
+				return Optional.of(node);
 			}
-			return node.getNode(name);
+			return Optional.of(node.getNode(name));
 		} catch (PathNotFoundException e) {
-			return createAreaNode(name, node, areaDefinition).orElseThrow(() ->
-				new RenderException("Couldn't create area node " + name + " " + NodeUtil.getPathIfPossible(node))
-			);
+			return createAreaNode(name, node, areaDefinition);
 		} catch (RepositoryException e) {
 			throw Exceptions.sneak().handle(e);
 		}
