@@ -1,18 +1,21 @@
 package com.merkle.oss.magnolia.renderer.handlebars.helpers;
 
-import com.github.jknack.handlebars.Handlebars;
-import com.github.jknack.handlebars.Options;
-import com.merkle.oss.magnolia.renderer.handlebars.utils.LocaleProvider;
 import info.magnolia.i18nsystem.FixedLocaleProvider;
 import info.magnolia.i18nsystem.SimpleTranslator;
 import info.magnolia.i18nsystem.TranslationService;
 import info.magnolia.jcr.util.ContentMap;
 
-import javax.inject.Inject;
-import javax.jcr.Node;
-import java.io.IOException;
 import java.util.Locale;
 import java.util.Set;
+
+import javax.inject.Inject;
+import javax.jcr.Node;
+
+import org.apache.commons.text.StringSubstitutor;
+
+import com.github.jknack.handlebars.Handlebars;
+import com.github.jknack.handlebars.Options;
+import com.merkle.oss.magnolia.renderer.handlebars.utils.LocaleProvider;
 
 public class I18nHelper implements NamedHelper<String> {
 	private final TranslationService translationService;
@@ -32,7 +35,7 @@ public class I18nHelper implements NamedHelper<String> {
 		final Node node = ((ContentMap) options.get("content")).getJCRNode();
 		final Locale locale = localeProvider.getLocale(node);
 		final SimpleTranslator simpleTranslator = new SimpleTranslator(translationService, new FixedLocaleProvider(locale));
-		final String message = simpleTranslator.translate(key, options.params);
+		final String message = new StringSubstitutor(options.hash, "{", "}").replace(simpleTranslator.translate(key, options.params));
 		return new Handlebars.SafeString(message);
 	}
 

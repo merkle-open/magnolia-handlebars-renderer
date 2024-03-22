@@ -125,6 +125,24 @@ Provides messages for a given key, translated using the locale of the content no
 ```handlebars
 {{{t 'web.patterns.paging.next'}}}
 ```
+#### placeholders
+messages can contain either indexed or mapped placeholders.
+##### indexed
+```properties
+web.patterns.paging.current=current page is {0}
+```
+```handlebars
+{{{t 'web.patterns.paging.current' 2}}}
+```
+--> =current page is 2
+##### map
+```properties
+web.patterns.paging.current=current page is {currentPagePlaceholder}
+```
+```handlebars
+{{{t 'web.patterns.paging.current' currentPagePlaceholder=2}}}
+```
+--> =current page is 2
 
 ### [If condition](light-development/src/main/java/com/merkle/oss/magnolia/renderer/handlebars/helpers/IfConditionHelper.java)
 Conditionally renders a block or returns evaluated condition.
