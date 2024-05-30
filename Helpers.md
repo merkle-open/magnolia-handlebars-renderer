@@ -220,3 +220,9 @@ Truthiness of arguments is determined by [Handlebars.Utils.isEmpty(Object)](http
 {{#if (not (if a '===' b)) }} a does not equal b {{/if}}
 {{#not (if a '===' b) }} a does not equal b {{/not}}
 ```
+
+### [JsonParser](light-development/src/main/java/com/merkle/oss/magnolia/renderer/handlebars/helpers/JsonParseHelper.java)
+Can be used to pass parsed json to other helpers. Arrays,objects and primitives are supported.
+```handlebars
+{{pattern name='somePattern' someJsonObjectProperty=(parse-json '{"key": "value"}')}}
+```

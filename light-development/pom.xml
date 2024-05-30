@@ -37,6 +37,10 @@
             <groupId>com.google.auto.factory</groupId>
             <artifactId>auto-factory</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+        </dependency>
 
         <!-- TESTING DEPENDENCIES -->
         <dependency>
