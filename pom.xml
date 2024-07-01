@@ -37,7 +37,7 @@
     <properties>
 		<magnolia.version>6.2.46</magnolia.version>
 		<javax.servlet-api.version>4.0.1</javax.servlet-api.version>
-		<handlebars.version>3.4.1</handlebars.version>
+		<handlebars.version>4.3.1</handlebars.version>
 		<google-autofactory-version>1.1.0</google-autofactory-version>
 		<magnolia.blossom.version>3.7.0</magnolia.blossom.version>
 		<spring.version>5.3.37</spring.version>
