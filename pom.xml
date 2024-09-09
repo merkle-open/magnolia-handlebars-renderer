@@ -34,25 +34,27 @@
 		<module>blossom-reference-generator</module>
 	</modules>
 
-    <properties>
-		<magnolia.version>6.2.46</magnolia.version>
+	<properties>
+		<!-- check for new versions:  mvn versions:display-property-updates -->
+		<magnolia.version>6.3.0</magnolia.version>
 		<javax.servlet-api.version>4.0.1</javax.servlet-api.version>
 		<handlebars.version>4.3.1</handlebars.version>
 		<google-autofactory-version>1.1.0</google-autofactory-version>
-		<magnolia.blossom.version>3.7.0</magnolia.blossom.version>
+		<magnolia.blossom.version>4.0.0</magnolia.blossom.version>
 		<spring.version>5.3.37</spring.version>
 		<apache-commons-text.version>1.12.0</apache-commons-text.version>
 		<java-poet.version>1.13.0</java-poet.version>
+		<jsr305.nullable.version>3.0.2</jsr305.nullable.version>
 
 		<!--Test dependency versions-->
-		<junit.version>5.10.2</junit.version>
-		<mockito.version>5.12.0</mockito.version>
+		<junit.version>5.11.0</junit.version>
+		<mockito.version>5.13.0</mockito.version>
 
 		<!-- Maven Plugins -->
 		<mvn.compiler.plugin.version>3.13.0</mvn.compiler.plugin.version>
 		<mvn.source.plugin.version>3.3.1</mvn.source.plugin.version>
 		<mvn.javadoc.version>3.5.0</mvn.javadoc.version>
-		<mvn.surefire.plugin.version>3.3.0</mvn.surefire.plugin.version>
+		<mvn.surefire.plugin.version>3.5.0</mvn.surefire.plugin.version>
 		<mvn.gpg.plugin.version>3.0.1</mvn.gpg.plugin.version>
 		<mvn.nexus-staging.plugin.version>1.6.13</mvn.nexus-staging.plugin.version>
 		<mvn.plugin.version>3.9.0</mvn.plugin.version>
@@ -123,6 +125,12 @@
 				<groupId>com.squareup</groupId>
 				<artifactId>javapoet</artifactId>
 				<version>${java-poet.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.google.code.findbugs</groupId>
+				<artifactId>jsr305</artifactId>
+				<version>${jsr305.nullable.version}</version>
 			</dependency>
 
 			<!-- TESTING DEPENDENCIES -->
