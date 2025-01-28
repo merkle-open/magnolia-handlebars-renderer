@@ -33,8 +33,8 @@
             <implementation>com.merkle.oss.magnolia.renderer.handlebars.blossom.component.availability.ComponentAvailabilityRoleResolverFactory</implementation>
         </component>
         <component>
-            <type>com.merkle.oss.magnolia.renderer.handlebars.blossom.renderer.HandlebarsTemplateRenderer</type>
-            <implementation>com.merkle.oss.magnolia.renderer.handlebars.blossom.renderer.HandlebarsTemplateRenderer</implementation>
+            <type>com.merkle.oss.magnolia.renderer.handlebars.blossom.renderer.BlossomHandlebarsTemplateRenderer</type>
+            <implementation>com.merkle.oss.magnolia.renderer.handlebars.blossom.renderer.BlossomHandlebarsTemplateRenderer</implementation>
         </component>
     </components>
 

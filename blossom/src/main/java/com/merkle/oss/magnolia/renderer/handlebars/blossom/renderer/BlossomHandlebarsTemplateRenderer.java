@@ -1,6 +1,5 @@
 package com.merkle.oss.magnolia.renderer.handlebars.blossom.renderer;
 
-import com.merkle.oss.magnolia.renderer.handlebars.renderer.HandlebarsRenderer;
 import info.magnolia.context.MgnlContext;
 import info.magnolia.context.WebContext;
 import info.magnolia.module.blossom.render.RenderContext;
@@ -10,22 +9,26 @@ import info.magnolia.rendering.engine.RenderingEngine;
 import info.magnolia.rendering.template.configured.ConfiguredTemplateDefinition;
 import info.magnolia.rendering.template.configured.DefaultTemplateAvailability;
 
-import javax.inject.Inject;
-import javax.jcr.Node;
 import java.util.Map;
 
-public class HandlebarsTemplateRenderer {
+import javax.inject.Inject;
+import javax.jcr.Node;
+
+import com.merkle.oss.magnolia.renderer.handlebars.blossom.BlossomHandlebarsRenderer;
+import com.merkle.oss.magnolia.renderer.handlebars.renderer.ImmutableResponseContentTypeWebContextWrapper;
+
+public class BlossomHandlebarsTemplateRenderer {
 	private final RenderingEngine renderingEngine;
 
 	@Inject
-	public HandlebarsTemplateRenderer(final RenderingEngine renderingEngine) {
+	public BlossomHandlebarsTemplateRenderer(final RenderingEngine renderingEngine) {
 		this.renderingEngine = renderingEngine;
 	}
 
 	public String render(final Node page, final String templateLocation, final Map<String, Object> context) throws RenderException {
 		final ConfiguredTemplateDefinition definition = new ConfiguredTemplateDefinition(new DefaultTemplateAvailability());
 		definition.setTemplateScript(templateLocation);
-		definition.setRenderType(HandlebarsRenderer.NAME);
+		definition.setRenderType(BlossomHandlebarsRenderer.NAME);
 
 		/*
 		 * info.magnolia.rendering.renderer.AbstractRenderer sets the servletResponse Content-Type to MIMEMapping.DEFAULT_EXTENSION (html) if not present.

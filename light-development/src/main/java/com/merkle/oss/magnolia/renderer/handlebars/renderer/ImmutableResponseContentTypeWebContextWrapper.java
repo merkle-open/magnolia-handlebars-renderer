@@ -1,11 +1,12 @@
-package com.merkle.oss.magnolia.renderer.handlebars.blossom.renderer;
+package com.merkle.oss.magnolia.renderer.handlebars.renderer;
 
 import info.magnolia.context.ProtectingWebContextWrapper;
 import info.magnolia.context.WebContext;
 
+import java.util.Collections;
+
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;
-import java.util.Collections;
 
 public class ImmutableResponseContentTypeWebContextWrapper extends ProtectingWebContextWrapper {
 
