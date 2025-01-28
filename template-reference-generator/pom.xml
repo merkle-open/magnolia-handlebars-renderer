@@ -9,7 +9,7 @@
         <version>0.1.1-SNAPSHOT</version>
     </parent>
 
-    <artifactId>magnolia-handlebars-blossom-reference-generator</artifactId>
+    <artifactId>magnolia-handlebars-template-reference-generator</artifactId>
     <name>HandlebarsRenderer - referenceGenerator</name>
     <packaging>maven-plugin</packaging>
 

@@ -7,7 +7,7 @@ This maven plugin generates java classes for handlebars templates defined in the
 	<plugins>
 		<plugin>
 			<groupId>com.namics.oss.magnolia</groupId>
-			<artifactId>magnolia-handlebars-blossom-reference-generator</artifactId>
+			<artifactId>magnolia-handlebars-template-reference-generator</artifactId>
 			<version>${merkle.oss.handlebars-renderer.version}</version>
 			<configuration>
 				<packageName>com.namics.blitzdings.web.theme.templates</packageName>
