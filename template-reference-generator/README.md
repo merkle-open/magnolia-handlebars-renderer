@@ -6,7 +6,7 @@ This maven plugin generates java classes for handlebars templates defined in the
 <build>
 	<plugins>
 		<plugin>
-			<groupId>com.namics.oss.magnolia</groupId>
+			<groupId>com.merkle.oss.magnolia</groupId>
 			<artifactId>magnolia-handlebars-template-reference-generator</artifactId>
 			<version>${merkle.oss.handlebars-renderer.version}</version>
 			<configuration>
