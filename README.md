@@ -17,7 +17,7 @@ See [this README](blossom-reference-generator/README.md) for documentation on th
 ##### POM
 ```xml
 <dependency>
-    <groupId>com.namics.oss.magnolia</groupId>
+    <groupId>com.merkle.oss.magnolia</groupId>
     <artifactId>magnolia-handlebars-renderer</artifactId>
     <version>${merkle.oss.handlebars-renderer.version}</version>
 </dependency>
@@ -32,7 +32,7 @@ See [this README](blossom-reference-generator/README.md) for documentation on th
 #### Blossom
 ```xml
 <dependency>
-    <groupId>com.namics.oss.magnolia</groupId>
+    <groupId>com.merkle.oss.magnolia</groupId>
     <artifactId>magnolia-handlebars-renderer-blossom</artifactId>
     <version>${merkle.oss.handlebars-renderer.version}</version>
 </dependency>
