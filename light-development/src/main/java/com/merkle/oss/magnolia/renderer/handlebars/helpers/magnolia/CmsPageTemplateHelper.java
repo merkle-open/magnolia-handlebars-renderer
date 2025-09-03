@@ -6,7 +6,7 @@ import info.magnolia.rendering.engine.RenderException;
 import info.magnolia.templating.elements.PageElement;
 import info.magnolia.templating.functions.TemplatingFunctions;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.io.IOException;
 import java.util.Map;
 import java.util.Optional;

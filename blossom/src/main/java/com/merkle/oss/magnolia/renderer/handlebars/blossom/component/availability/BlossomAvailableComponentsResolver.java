@@ -8,7 +8,7 @@ import info.magnolia.templating.elements.AreaElement;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Optional;
@@ -53,8 +53,7 @@ public class BlossomAvailableComponentsResolver implements CmsAreaTemplateHelper
 	}
 
 	private boolean evaluatePredicate(final AreaElement area, final ComponentAvailability availableComponent) {
-		if(availableComponent instanceof ComponentAvailabilityWithPredicate) {
-			final ComponentAvailabilityWithPredicate availabilityWithPredicate = (ComponentAvailabilityWithPredicate) availableComponent;
+		if(availableComponent instanceof ComponentAvailabilityWithPredicate availabilityWithPredicate) {
 			return availabilityWithPredicate.getPredicate().test(
 					new ComponentAvailabilityWithPredicate.AreaAndComponentId() {
 						@Override

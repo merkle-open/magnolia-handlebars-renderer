@@ -43,8 +43,7 @@ public class BlossomAvailableComponentsTemplateDefinitionBuilder extends Templat
 								Map.entry(id, handlerMetaData.getHandlerClass())
 						)
 				)
-				.filter(Optional::isPresent)
-				.map(Optional::get)
+				.flatMap(Optional::stream)
 				.collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (aClass, aClass2) -> aClass));
 	}
 }

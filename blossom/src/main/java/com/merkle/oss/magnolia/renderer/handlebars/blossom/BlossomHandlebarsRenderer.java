@@ -9,7 +9,7 @@ import info.magnolia.rendering.engine.RenderingEngine;
 import info.magnolia.rendering.model.RenderingModel;
 import info.magnolia.rendering.template.RenderableDefinition;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import javax.jcr.Node;
 import java.util.Map;
 import java.util.Optional;

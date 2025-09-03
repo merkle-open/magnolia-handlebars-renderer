@@ -8,7 +8,7 @@ import info.magnolia.jcr.util.ContentMap;
 import java.util.Locale;
 import java.util.Set;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import javax.jcr.Node;
 
 import org.apache.commons.text.StringSubstitutor;

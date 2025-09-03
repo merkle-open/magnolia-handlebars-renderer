@@ -1,14 +1,15 @@
 package com.merkle.oss.magnolia.renderer.handlebars.helpers;
 
-import com.github.jknack.handlebars.Options;
-import com.merkle.oss.magnolia.renderer.handlebars.utils.AssetLinkProvider;
-import com.merkle.oss.magnolia.renderer.handlebars.utils.AssetLinkProviderFactory;
-import org.apache.commons.lang3.StringUtils;
-
-import javax.inject.Inject;
 import java.io.IOException;
 import java.util.Optional;
 import java.util.Set;
+
+import org.apache.commons.lang3.StringUtils;
+
+import com.github.jknack.handlebars.Options;
+import com.merkle.oss.magnolia.renderer.handlebars.utils.AssetLinkProviderFactory;
+
+import jakarta.inject.Inject;
 
 public class CachedAssetHelper implements NamedHelper<Object> {
 	private final AssetLinkProviderFactory assetLinkProviderFactory;

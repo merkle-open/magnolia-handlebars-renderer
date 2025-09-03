@@ -6,7 +6,7 @@ import info.magnolia.cms.security.operations.ConfiguredOperationPermissionDefini
 import info.magnolia.cms.security.operations.OperationPermissionDefinition;
 import info.magnolia.rendering.template.ComponentAvailability;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Map;

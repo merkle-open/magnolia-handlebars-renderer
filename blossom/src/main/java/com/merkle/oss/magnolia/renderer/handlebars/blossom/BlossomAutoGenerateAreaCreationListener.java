@@ -13,9 +13,9 @@ public class BlossomAutoGenerateAreaCreationListener implements CmsAreaTemplateH
 	@Override
 	public void onAreaCreated(final Node areaNode, final AreaDefinition areaDefinition) throws RenderException {
 		final AutoGenerationConfiguration<?> autoGenConfig = areaDefinition.getAutoGeneration();
-		if (autoGenConfig instanceof TemplateDefinitionBuilder.BlossomAutoGenerationConfiguration) {
+		if (autoGenConfig instanceof TemplateDefinitionBuilder.BlossomAutoGenerationConfiguration configuration) {
 			final TemplateDefinitionBuilder.BlossomGenerator generator = new TemplateDefinitionBuilder.BlossomGenerator(areaNode);
-			generator.generate((TemplateDefinitionBuilder.BlossomAutoGenerationConfiguration) autoGenConfig);
+			generator.generate(configuration);
 		}
 	}
 }

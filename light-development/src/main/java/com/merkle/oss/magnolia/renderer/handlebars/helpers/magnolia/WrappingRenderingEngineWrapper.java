@@ -7,9 +7,9 @@ import info.magnolia.rendering.engine.RenderingEngine;
 import info.magnolia.rendering.listeners.AbstractRenderingListener;
 import info.magnolia.rendering.template.RenderableDefinition;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import javax.jcr.Node;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Collections;

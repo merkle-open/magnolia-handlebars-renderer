@@ -8,7 +8,7 @@ import info.magnolia.module.blossom.annotation.ComponentCategory;
 import info.magnolia.module.blossom.template.DetectedHandlersMetaData;
 import info.magnolia.rendering.template.ComponentAvailability;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.lang.annotation.Annotation;
 import java.util.*;
 import java.util.function.Predicate;

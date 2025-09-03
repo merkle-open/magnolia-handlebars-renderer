@@ -5,7 +5,7 @@ import info.magnolia.module.InstallContext;
 import info.magnolia.module.delta.Task;
 import info.magnolia.module.model.Version;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.util.List;
 
 public class BlossomHandlebarsRendererModuleVersionHandler extends DefaultModuleVersionHandler {

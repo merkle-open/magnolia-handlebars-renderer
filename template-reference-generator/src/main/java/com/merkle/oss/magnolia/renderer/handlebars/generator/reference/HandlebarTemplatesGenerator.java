@@ -3,7 +3,7 @@ package com.merkle.oss.magnolia.renderer.handlebars.generator.reference;
 import com.squareup.javapoet.*;
 import org.apache.commons.lang3.StringUtils;
 
-import javax.annotation.processing.Generated;
+import jakarta.annotation.Generated;
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Modifier;
 import java.io.File;
