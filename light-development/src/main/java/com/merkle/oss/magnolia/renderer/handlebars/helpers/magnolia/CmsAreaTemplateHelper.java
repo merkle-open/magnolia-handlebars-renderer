@@ -27,9 +27,9 @@ import info.magnolia.templating.functions.TemplatingFunctions;
 import info.magnolia.templating.module.TemplatingModule;
 import org.apache.commons.lang3.StringUtils;
 
-import javax.annotation.Nullable;
-import javax.inject.Inject;
-import javax.inject.Provider;
+import jakarta.annotation.Nullable;
+import jakarta.inject.Inject;
+import jakarta.inject.Provider;
 import javax.jcr.*;
 import java.io.IOException;
 import java.util.Map;

@@ -2,7 +2,7 @@ package com.merkle.oss.magnolia.renderer.handlebars.utils;
 
 import org.apache.commons.text.StringSubstitutor;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.io.File;
 import java.io.IOException;
 import java.net.JarURLConnection;

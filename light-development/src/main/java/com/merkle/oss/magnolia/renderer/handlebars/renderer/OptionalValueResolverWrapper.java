@@ -2,7 +2,7 @@ package com.merkle.oss.magnolia.renderer.handlebars.renderer;
 
 import com.github.jknack.handlebars.ValueResolver;
 
-import javax.annotation.Nullable;
+import jakarta.annotation.Nullable;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
@@ -31,8 +31,8 @@ public class OptionalValueResolverWrapper implements ValueResolver {
 
 	@Nullable
 	private Object unwrap(Object object) {
-		if(object instanceof Optional) {
-			return ((Optional<?>)object).orElse(null);
+		if(object instanceof Optional<?> optional) {
+			return optional.orElse(null);
 		}
 		return object;
 	}

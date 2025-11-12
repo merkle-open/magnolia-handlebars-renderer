@@ -1,25 +1,27 @@
 package com.merkle.oss.magnolia.renderer.handlebars.helpers.magnolia;
 
-import com.github.jknack.handlebars.Options;
-import com.machinezoo.noexception.Exceptions;
 import info.magnolia.jcr.util.ContentMap;
 import info.magnolia.objectfactory.Components;
 import info.magnolia.rendering.engine.RenderException;
 import info.magnolia.rendering.engine.RenderingEngine;
 import info.magnolia.templating.elements.ComponentElement;
 import info.magnolia.templating.functions.TemplatingFunctions;
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import javax.inject.Inject;
-import javax.jcr.Node;
-import javax.jcr.RepositoryException;
 import java.io.IOException;
-import java.lang.invoke.MethodHandles;
-import java.util.*;
+import java.util.Collection;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import javax.jcr.Node;
+import javax.jcr.RepositoryException;
+
+import com.github.jknack.handlebars.Options;
+
+import jakarta.inject.Inject;
 
 public class CmsComponentTemplateHelper extends AbstractCmsTemplateHelper<ContentMap> {
 	private final RenderingEngine renderingEngine;

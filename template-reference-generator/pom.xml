@@ -6,7 +6,7 @@
     <parent>
         <groupId>com.merkle.oss.magnolia</groupId>
         <artifactId>magnolia-handlebars-renderer-parent</artifactId>
-        <version>0.1.3-SNAPSHOT</version>
+        <version>0.2.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>magnolia-handlebars-template-reference-generator</artifactId>
@@ -36,8 +36,9 @@
             <artifactId>javapoet</artifactId>
         </dependency>
         <dependency>
-            <groupId>javax.annotation</groupId>
-            <artifactId>javax.annotation-api</artifactId>
+            <groupId>jakarta.annotation</groupId>
+            <artifactId>jakarta.annotation-api</artifactId>
+      <scope>provided</scope>
         </dependency>
 
         <!-- TESTING DEPENDENCIES -->

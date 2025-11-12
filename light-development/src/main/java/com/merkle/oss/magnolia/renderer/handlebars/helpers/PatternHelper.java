@@ -2,7 +2,7 @@ package com.merkle.oss.magnolia.renderer.handlebars.helpers;
 
 import com.github.jknack.handlebars.*;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -54,8 +54,8 @@ public class PatternHelper implements NamedHelper<Object> {
 		return Optional
 				.ofNullable(options.hash("data"))
 				.map(data -> {
-					if (data instanceof String) {
-						return options.context.get((String) data);
+					if (data instanceof String string) {
+						return options.context.get(string);
 					}
 					return data;
 				});

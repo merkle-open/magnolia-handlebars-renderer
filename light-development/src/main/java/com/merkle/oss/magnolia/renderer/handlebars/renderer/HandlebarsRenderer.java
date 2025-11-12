@@ -16,7 +16,7 @@ import info.magnolia.rendering.renderer.AbstractRenderer;
 import info.magnolia.rendering.template.RenderableDefinition;
 import info.magnolia.rendering.util.AppendableWriter;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import javax.jcr.Node;
 import java.util.HashMap;
 import java.util.Map;

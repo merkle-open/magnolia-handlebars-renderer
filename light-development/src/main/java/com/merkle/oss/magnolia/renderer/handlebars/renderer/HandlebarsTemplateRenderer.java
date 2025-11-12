@@ -10,7 +10,7 @@ import info.magnolia.rendering.template.configured.DefaultTemplateAvailability;
 
 import java.util.Map;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import javax.jcr.Node;
 
 
