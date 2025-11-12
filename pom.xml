@@ -30,7 +30,6 @@
 
   <modules>
     <module>light-development</module>
-    <module>blossom</module>
     <module>template-reference-generator</module>
   </modules>
 
@@ -40,8 +39,6 @@
     <javax.servlet-api.version>4.0.1</javax.servlet-api.version>
     <handlebars.version>4.5.0</handlebars.version>
     <google-autofactory-version>1.1.0</google-autofactory-version>
-    <magnolia.blossom.version>4.0.0</magnolia.blossom.version>
-    <spring.version>5.3.37</spring.version>
     <apache-commons-text.version>1.14.0</apache-commons-text.version>
     <java-poet.version>1.13.0</java-poet.version>
 
