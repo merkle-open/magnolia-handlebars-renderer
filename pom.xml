@@ -29,7 +29,7 @@
   </developers>
 
   <modules>
-    <module>light-development</module>
+    <module>handlebars-renderer</module>
     <module>template-reference-generator</module>
   </modules>
 

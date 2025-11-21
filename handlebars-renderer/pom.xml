@@ -10,7 +10,7 @@
     </parent>
 
     <artifactId>magnolia-handlebars-renderer</artifactId>
-    <name>HandlebarsRenderer - Light-Development</name>
+    <name>HandlebarsRenderer</name>
 
     <dependencies>
         <dependency>
