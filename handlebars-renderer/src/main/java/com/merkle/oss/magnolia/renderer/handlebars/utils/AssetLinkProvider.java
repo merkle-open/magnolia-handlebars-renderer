@@ -10,7 +10,7 @@ import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-@AutoFactory
+@AutoFactory(allowSubclasses = true)
 public class AssetLinkProvider {
     private static final Pattern PATH_SUFFIX_PATTERN = Pattern.compile("^([^#]*)((#.*)|$)$");
 
@@ -40,22 +40,22 @@ public class AssetLinkProvider {
         );
     }
 
-    private String addResourcePrefix(final String path) {
+    protected String addResourcePrefix(final String path) {
         return "/.resources" + path;
     }
 
-    private String addContextPath(final String path) {
+    protected String addContextPath(final String path) {
         return MgnlContext.getContextPath() + path;
     }
 
-    private String toAbsolutePath(final String path, final boolean shouldApply) {
+    protected String toAbsolutePath(final String path, final boolean shouldApply) {
         if (shouldApply) {
             return linkUtil.toExternalLink(path);
         }
         return path;
     }
 
-    private String getPath(final String theme, final String path, final boolean shouldApplyTimestamp) throws IOException {
+    protected String getPath(final String theme, final String path, final boolean shouldApplyTimestamp) throws IOException {
         final Matcher matcher = PATH_SUFFIX_PATTERN.matcher(path);
         if (matcher.find()) {
             final String filePath = Path.of(frontendAssetsPath, theme, matcher.group(1)).toString();
