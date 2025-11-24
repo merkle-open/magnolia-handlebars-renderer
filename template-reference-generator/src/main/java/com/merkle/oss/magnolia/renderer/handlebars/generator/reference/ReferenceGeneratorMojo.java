@@ -19,7 +19,7 @@ public class ReferenceGeneratorMojo extends AbstractMojo {
 	private String templateScriptClass;
 	@Parameter(property = "annotationClasses", required = true)
 	private Set<AnnotationClass> annotationClasses;
-	@Parameter(property = "outputDirectory", defaultValue = "${project.build.directory}/generated-sources")
+	@Parameter(property = "outputDirectory", defaultValue = "${project.build.directory}/generated-sources/templates")
 	private String outputDirectory;
 	@Parameter(property = "handlebarsSrcRoot", required = true)
 	private String handlebarsSrcRoot;
