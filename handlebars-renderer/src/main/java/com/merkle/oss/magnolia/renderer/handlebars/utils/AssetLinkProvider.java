@@ -10,7 +10,7 @@ import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-@AutoFactory(allowSubclasses = true)
+@AutoFactory(implementing = AssetLinkProvider.Factory.class)
 public class AssetLinkProvider {
     private static final Pattern PATH_SUFFIX_PATTERN = Pattern.compile("^([^#]*)((#.*)|$)$");
 
@@ -62,5 +62,9 @@ public class AssetLinkProvider {
             return (shouldApplyTimestamp ? timestampUtil.addTimestamp(filePath) : filePath) + Optional.ofNullable(matcher.group(2)).orElse("");
         }
         throw new IllegalArgumentException("Couldn't match path"+path);
+    }
+
+    public interface Factory {
+        AssetLinkProvider create(String frontendAssetsPath);
     }
 }

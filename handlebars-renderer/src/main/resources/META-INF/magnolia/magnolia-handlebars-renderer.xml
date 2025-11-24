@@ -58,6 +58,11 @@
             <type>com.merkle.oss.magnolia.renderer.handlebars.renderer.HandlebarsTemplateRenderer</type>
             <implementation>com.merkle.oss.magnolia.renderer.handlebars.renderer.HandlebarsTemplateRenderer</implementation>
         </component>
+
+        <component>
+            <type>com.merkle.oss.magnolia.renderer.handlebars.utils.AssetLinkProvider$Factory</type>
+            <implementation>com.merkle.oss.magnolia.renderer.handlebars.utils.AssetLinkProviderFactory</implementation>
+        </component>
     </components>
 
     <dependencies>

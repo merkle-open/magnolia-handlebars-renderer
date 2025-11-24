@@ -7,15 +7,15 @@ import java.util.Set;
 import org.apache.commons.lang3.StringUtils;
 
 import com.github.jknack.handlebars.Options;
-import com.merkle.oss.magnolia.renderer.handlebars.utils.AssetLinkProviderFactory;
+import com.merkle.oss.magnolia.renderer.handlebars.utils.AssetLinkProvider;
 
 import jakarta.inject.Inject;
 
 public class CachedAssetHelper implements NamedHelper<Object> {
-	private final AssetLinkProviderFactory assetLinkProviderFactory;
+	private final AssetLinkProvider.Factory assetLinkProviderFactory;
 
 	@Inject
-	public CachedAssetHelper(final AssetLinkProviderFactory assetLinkProviderFactory) {
+	public CachedAssetHelper(final AssetLinkProvider.Factory assetLinkProviderFactory) {
 		this.assetLinkProviderFactory = assetLinkProviderFactory;
 	}
 
