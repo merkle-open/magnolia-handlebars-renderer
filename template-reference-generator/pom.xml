@@ -6,7 +6,7 @@
     <parent>
         <groupId>com.merkle.oss.magnolia</groupId>
         <artifactId>magnolia-handlebars-renderer-parent</artifactId>
-        <version>0.2.1-SNAPSHOT</version>
+        <version>0.2.1</version>
     </parent>
 
     <artifactId>magnolia-handlebars-template-reference-generator</artifactId>
